@@ -74,12 +74,11 @@ public class BattleField implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e)
 	{
+		
+		JButton invoked=( (JButton)e.getSource() );
+		int row=(Integer)invoked.getClientProperty("row"),col=(Integer)invoked.getClientProperty("col");
 		if(Game.state==Credentials.STATE_GAME_START)
 		{
-			
-			JButton invoked=( (JButton)e.getSource() );
-			
-			int row=(Integer)invoked.getClientProperty("row"),col=(Integer)invoked.getClientProperty("col");
 			if(dummyLocation.x1==-1)
 			{
 				dummyLocation.x1=row;dummyLocation.y1=col;
@@ -223,6 +222,17 @@ public class BattleField implements ActionListener{
 		else if(Game.state==Credentials.STATE_GAME_PLAYING)
 		{
 			
+			if(Ship.contains(new Pair(row,col),Game.turn))
+			{
+				JOptionPane.showMessageDialog(null, Game.players.get(Game.turn^1).name+" is hit",null,JOptionPane.OK_OPTION);
+				buttons.get(row).get(col).setBackground(Color.RED);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Miss",null,JOptionPane.OK_OPTION);
+				buttons.get(row).get(col).setBackground(Color.YELLOW);
+			}
+			
+			buttons.get(row).get(col).setEnabled(false);
 			
 			
 			

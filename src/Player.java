@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 
@@ -7,14 +8,14 @@ public class Player {
 	private int age;
 	public int life;
 	public BattleField field;
-	 HashSet<Pair> locationSet;
+	 HashMap<Pair,Ship> locationSet;
 	public Player(String name,int age,int life)
 	{
 		this.name=name;
 		this.life=life;
 		this.age=age;
 		field=new BattleField();
-		locationSet=new HashSet<Pair>();
+		locationSet=new HashMap<Pair,Ship>();
 	}
 	String getName()
 	{
@@ -34,7 +35,7 @@ public class Player {
 	}
 	void printLocationSet()
 	{
-		for(Pair p:locationSet)
+		for(Pair p:locationSet.keySet())
 		{
 			System.out.println(p.row +"\t"+p.col);
 		}

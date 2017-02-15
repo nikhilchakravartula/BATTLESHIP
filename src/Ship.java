@@ -7,10 +7,10 @@ public abstract class Ship {
 	abstract int getLife();
 	abstract Player getOwner();
 	
-	public boolean contains(Object o,int turn)
+	public static boolean contains(Object o,int turn)
 	{
 		Pair param=(Pair)o;
-		for(Pair p:Game.players.get(turn).locationSet)
+		for(Pair p:Game.players.get(turn).locationSet.keySet())
 		{
 			if(p.row==param.row && p.col==param.col)
 			{
@@ -86,7 +86,7 @@ public abstract class Ship {
 			{
 				for(int i=location.y1;i<=location.y2;i++)
 				{
-					Game.players.get(turn).locationSet.add(new Pair(location.x1,i));
+					Game.players.get(turn).locationSet.put(new Pair(location.x1,i),this);
 					
 				}
 				return true;
@@ -97,7 +97,7 @@ public abstract class Ship {
 				
 				for(int i=location.y2;i<=location.y1;i++)
 				{
-					Game.players.get(turn).locationSet.add(new Pair(location.x1,i));
+					Game.players.get(turn).locationSet.put(new Pair(location.x1,i),this);
 					
 				}
 				return true;
@@ -112,7 +112,7 @@ public abstract class Ship {
 			{
 				for(int i=location.x1;i<=location.x2;i++)
 				{
-					Game.players.get(turn).locationSet.add(new Pair(i,location.y1));
+					Game.players.get(turn).locationSet.put(new Pair(i,location.y1),this);
 					
 				}
 				return true;
@@ -121,7 +121,7 @@ public abstract class Ship {
 			{
 				for(int i=location.x2;i<=location.x1;i++)
 				{
-					Game.players.get(turn).locationSet.add(new Pair(i,location.y1));
+					Game.players.get(turn).locationSet.put(new Pair(i,location.y1),this);
 					
 					
 				}

@@ -66,7 +66,16 @@ public class Game {
 	}
 	void startPlay()
 	{
-		
+		turn=0;
+		while(state!=Credentials.STATE_GAME_END)
+		{
+			
+			
+			
+			
+			
+			turn^=1;
+		}
 	}
 	public static void main(String args[])
 	{
