@@ -64,7 +64,10 @@ public class Game {
 		state=Credentials.STATE_GAME_PLAYING;
 		
 	}
-	
+	void startPlay()
+	{
+		
+	}
 	public static void main(String args[])
 	{
 		Game game=new Game();
@@ -72,5 +75,6 @@ public class Game {
 		players.get(0).printLocationSet();
 		System.out.println("Player2");
 		players.get(1).printLocationSet();
+		game.startPlay();
 	}
 }
