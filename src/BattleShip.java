@@ -1,10 +1,9 @@
 
 public class BattleShip extends Ship {
 
-	public BattleShip(Player owner,Location location)
+	public BattleShip(Player owner)
 	{
 		this.life=Credentials.LIFE_BATTLESHIP;
-		this.location=location;
 		this.owner=owner;
 		
 	}

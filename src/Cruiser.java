@@ -1,10 +1,9 @@
 
 public class Cruiser extends Ship{
 	
-	public Cruiser(Player owner,Location location)
+	public Cruiser(Player owner)
 	{
 		this.life=Credentials.LIFE_CRUISER;
-		this.location=location;
 		this.owner=owner;
 		
 	}

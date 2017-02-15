@@ -1,10 +1,9 @@
 
 public class Submarine extends Ship{
 
-	public Submarine(Player owner,Location location)
+	public Submarine(Player owner)
 	{
 		this.life=Credentials.LIFE_SUBMARINE;
-		this.location=location;
 		this.owner=owner;
 		
 	}

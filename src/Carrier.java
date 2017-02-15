@@ -1,10 +1,9 @@
 
 public class Carrier extends Ship{
 
-	public Carrier(Player owner,Location location)
+	public Carrier(Player owner)
 	{
 		this.life=Credentials.LIFE_AIRCRAFT;
-		this.location=location;
 		this.owner=owner;
 		
 	}
