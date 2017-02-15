@@ -1,10 +1,10 @@
 
 public class Destroyer extends Ship {
 
-	public Destroyer(Player owner)
+	public Destroyer(int owner)
 	{
 		this.life=Credentials.LIFE_DESTROYER;
-		this.owner=owner;
+		this.owner=Game.players.get(owner);
 		
 	}
 

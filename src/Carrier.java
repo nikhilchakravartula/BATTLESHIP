@@ -1,10 +1,10 @@
 
 public class Carrier extends Ship{
 
-	public Carrier(Player owner)
+	public Carrier(int owner)
 	{
 		this.life=Credentials.LIFE_AIRCRAFT;
-		this.owner=owner;
+		this.owner=Game.players.get(owner);
 		
 	}
 

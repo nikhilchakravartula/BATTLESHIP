@@ -1,24 +1,39 @@
 
 public class ShapeFactory {
 
-	public Ship getShip(String type,Player owner)
+	static ShapeFactory  Factory;
+	private ShapeFactory()
 	{
-		if(type.equalsIgnoreCase("Destroyer"))
+		
+	}
+	
+	public static ShapeFactory getFactory()
+	{
+		if(Factory==null)
+		{
+			return (Factory=new ShapeFactory());
+		}
+		else return Factory;
+	}
+	
+	public Ship getShip(String type,int owner)
+	{
+		if(type.equalsIgnoreCase("DESTROYER"))
 		{
 			return new Destroyer(owner);
 		}
-		else if(type.equalsIgnoreCase("Cruiser"))
+		else if(type.equalsIgnoreCase("SUBMARINE"))
 		{
 			return new Cruiser(owner);
 		}
-		else if(type.equalsIgnoreCase("Submarine"))
+		else if(type.equalsIgnoreCase("CRUISER"))
 		{
 			return new Submarine(owner);
-		}else if(type.equalsIgnoreCase("Carrier"))
+		}else if(type.equalsIgnoreCase("BATTLESHIP"))
 		{
 			return new Carrier(owner);
 		}
-		else if(type.equalsIgnoreCase("BattleShip"))
+		else if(type.equalsIgnoreCase("AIRCRAFT"))
 		{
 			return new BattleShip(owner);
 		}

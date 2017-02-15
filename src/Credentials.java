@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.ArrayList;
 
 
 public class Credentials {
@@ -16,7 +17,11 @@ public class Credentials {
 	public static final int LIFE_SUBMARINE=3;
 	public static final int NUM_ROWS=10;
 	public static final int NUM_COLS=10;
-	public static HashSet<Location> locationSet;
+	public static final String AVAILABLE_SHIPS[]={"DESTROYER","SUBMARINE","CRUISER","BATTLESHIP","AIRCRAFT"};
+	public static final int TYPE_DESTROYER=0,TYPE_SUBMARINE=1,TYPE_CRUISER=2,TYPE_BATTLESHIP=3,TYPE_AIRCRAFT=4;
+	//public static ArrayList<HashSet<Location> > locationSet;
+	public static final int STATE_GAME_START =1,STATE_GAME_PLAYING=2,STATE_GAME_END=3;
+	
 
 	
 }

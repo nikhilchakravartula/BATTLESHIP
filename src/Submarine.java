@@ -1,10 +1,10 @@
 
 public class Submarine extends Ship{
 
-	public Submarine(Player owner)
+	public Submarine(int owner)
 	{
 		this.life=Credentials.LIFE_SUBMARINE;
-		this.owner=owner;
+		this.owner=Game.players.get(owner);
 		
 	}
 
