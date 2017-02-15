@@ -222,10 +222,11 @@ public class BattleField implements ActionListener{
 		else if(Game.state==Credentials.STATE_GAME_PLAYING)
 		{
 			
-			if(Ship.contains(new Pair(row,col),Game.turn))
+			if(Ship.contains(new Pair(row,col),Game.turn^1))
 			{
 				JOptionPane.showMessageDialog(null, Game.players.get(Game.turn^1).name+" is hit",null,JOptionPane.OK_OPTION);
 				buttons.get(row).get(col).setBackground(Color.RED);
+				Game.players.get(Game.turn^1).locationSet.remove(new Pair(row,col));
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Miss",null,JOptionPane.OK_OPTION);
@@ -241,5 +242,6 @@ public class BattleField implements ActionListener{
 		
 	}
 
-	
+
+
 }
