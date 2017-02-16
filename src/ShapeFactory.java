@@ -16,26 +16,26 @@ public class ShapeFactory {
 		else return Factory;
 	}
 	
-	public Ship getShip(String type,int owner)
+	public Ship getShip(Game game,String type,int owner)
 	{
 		if(type.equalsIgnoreCase("DESTROYER"))
 		{
-			return new Destroyer(owner);
+			return new Destroyer(game,owner);
 		}
 		else if(type.equalsIgnoreCase("SUBMARINE"))
 		{
-			return new Cruiser(owner);
+			return new Submarine(game,owner);
 		}
 		else if(type.equalsIgnoreCase("CRUISER"))
 		{
-			return new Submarine(owner);
+			return new Cruiser(game,owner);
 		}else if(type.equalsIgnoreCase("BATTLESHIP"))
 		{
-			return new Carrier(owner);
+			return new BattleShip(game,owner);
 		}
 		else if(type.equalsIgnoreCase("AIRCRAFT"))
 		{
-			return new BattleShip(owner);
+			return new Carrier(game,owner);
 		}
 		
 		return null;

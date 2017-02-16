@@ -1,24 +1,24 @@
 
 public class Destroyer extends Ship {
 
-	public Destroyer(int owner)
+	public Destroyer(Game game,int owner)
 	{
 		this.life=Credentials.LIFE_DESTROYER;
-		this.owner=Game.players.get(owner);
+		this.owner=game.getPlayers().get(owner);
 		
 	}
 
-	public int getLife() {
+	 int getLife() {
 		// TODO Auto-generated method stub
 		return this.life;
 	}
 	
-	public Location getLocation() {
+	 Location getLocation() {
 		// TODO Auto-generated method stub
 		return this.location;
 	}
 
-	public Player getOwner() {
+	 Player getOwner() {
 		// TODO Auto-generated method stub
 		return this.owner;
 	}

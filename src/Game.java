@@ -8,14 +8,54 @@ import javax.swing.JTextArea;
 
 public class Game {
 
-	static ArrayList<Player> players;
-	static int turn;
-	static int state;
-	static int typeOfShip;
-	static ShapeFactory Factory;
+	private ArrayList<Player> players;
+	private int turn;
+	private int state;
+	private int typeOfShip;
+	private ShapeFactory Factory;
+	private Player winner;
+	
+	ArrayList<Player> getPlayers()
+	{
+		return players;
+	}
+	void setState(final int state)
+	{
+		this.state=state;
+	}
+	void setWinner(Player winner)
+	{
+		this.winner=winner;
+	}
+	int getTurn()
+	{
+		return turn;
+	}
+	
+	int getState()
+	{
+		return state;
+	}
+	int getTypeOfShip()
+	{
+		return typeOfShip;
+	}
+	void setTypeOfShip(int type)
+	{
+		this.typeOfShip=type;
+	}
+	ShapeFactory getFactory()
+	{
+		return Factory;
+	}
+	Player getWinner()
+	{
+		return winner;
+	}
 	
 	public Game()
 	{
+	
 		players=new ArrayList<Player>(Credentials.NUM_PLAYERS);
 		Factory=ShapeFactory.getFactory();
 		turn=0;
@@ -36,14 +76,14 @@ public class Game {
 			}while(nameText.getText()!=null && nameText.getText().length()==0);
 			
 		
-			 players.add(new Player(nameText.getText(),100,Credentials.NUM_SHIPS));
+			 players.add(new Player(this,nameText.getText(),100,Credentials.NUM_SHIPS));
 
 			 while(choices.size()!=0){
 			 String input = (String) JOptionPane.showInputDialog(null, "Place your Ships \n\nChoose your Ship "+nameText.getText(),
 				        nameText.getText(), JOptionPane.QUESTION_MESSAGE, null, choices.toArray(),  choices.get(0));
 			
-			 
-			 Game.typeOfShip=Arrays.asList(Credentials.AVAILABLE_SHIPS).indexOf(input);
+			 setTypeOfShip(Arrays.asList(Credentials.AVAILABLE_SHIPS).indexOf(input));
+			// System.out.println("choice chosen "+input+"\tand type "+Game.typeOfShip);
 			 synchronized (Factory) {
 				 try{
 				Factory.wait();
@@ -55,7 +95,7 @@ public class Game {
 			}
 			 choices.remove(input);
 			 }
-			players.get(turn).field.cleanUpGlow();
+			players.get(turn).getField().cleanUpGlow();
 			turn=turn^1;
 			
 		}
@@ -66,24 +106,36 @@ public class Game {
 	}
 	void startPlay()
 	{
+		players.get(1).getField().getFrame().setVisible(false);
 		turn=0;
 		while(state!=Credentials.STATE_GAME_END)
 		{
-			
-			
-			
-			
-			
-			turn^=1;
+			try
+			{
+				synchronized (Factory) {
+					Factory.wait();
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			players.get(turn).getField().getFrame().setVisible(false);
+			players.get(turn^1).getField().getFrame().setVisible(true);
+			turn=turn^1;
 		}
+		players.get(turn).getField().getFrame().setVisible(true);
+		players.get(turn^1).getField().getFrame().setVisible(true);
+		
 	}
 	public static void main(String args[])
 	{
 		Game game=new Game();
 		System.out.println("Player1");
-		players.get(0).printLocationSet();
+		game.players.get(0).printLocationSet();
 		System.out.println("Player2");
-		players.get(1).printLocationSet();
+		game.players.get(1).printLocationSet();
 		game.startPlay();
+		JOptionPane.showMessageDialog(null, "WINNER IS "+game.getWinner().getName());
 	}
 }

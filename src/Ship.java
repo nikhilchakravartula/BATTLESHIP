@@ -5,12 +5,14 @@ public abstract class Ship {
 	int life;
 	abstract Location getLocation();
 	abstract int getLife();
+	
 	abstract Player getOwner();
 	
-	public static boolean contains(Object o,int turn)
+	 static boolean contains(Game game,Object o,int turn)
 	{
 		Pair param=(Pair)o;
-		for(Pair p:Game.players.get(turn).locationSet.keySet())
+		System.out.println("game :"+game+"\n getPlayers ");//+game.getPlayers()+"\n locationset"+game.getPlayers().get(turn).getLocationSet());
+		for(Pair p:game.getPlayers().get(turn).getLocationSet().keySet())
 		{
 			if(p.row==param.row && p.col==param.col)
 			{
@@ -19,7 +21,7 @@ public abstract class Ship {
 		}
 		return false;
 	}
-	public boolean intersect(Location location,int turn)
+	 boolean intersect(Game game,Location location,int turn)
 	{
 		if(location.x1==location.x2)
 		{
@@ -27,7 +29,7 @@ public abstract class Ship {
 			{
 				for(int i=location.y1;i<=location.y2;i++)
 				{
-					if(contains(new Pair(location.x1,i),turn))
+					if(contains(game,new Pair(location.x1,i),turn))
 					{
 						//System.out.println("here2");
 						return true;
@@ -38,7 +40,7 @@ public abstract class Ship {
 			{
 				for(int i=location.y2;i<=location.y1;i++)
 				{
-					if(contains(new Pair(location.x1,i),turn))
+					if(contains(game,new Pair(location.x1,i),turn))
 					{
 						return true;
 					}
@@ -51,7 +53,7 @@ public abstract class Ship {
 			{
 				for(int i=location.x1;i<=location.x2;i++)
 				{
-				if(contains(new Pair(i,location.y1),turn))
+				if(contains(game,new Pair(i,location.y1),turn))
 					{
 						return true;
 					}
@@ -61,7 +63,7 @@ public abstract class Ship {
 			{
 				for(int i=location.x2;i<=location.x1;i++)
 				{
-					if(contains(new Pair(i,location.y1),turn))
+					if(contains(game,new Pair(i,location.y1),turn))
 					{
 						return true;
 					}
@@ -72,9 +74,9 @@ public abstract class Ship {
 		return false;
 	}
 	
-	public boolean setLocation(Location location,int size,int turn)
+	 boolean setLocation(Game game,Location location,int size,int turn)
 	{
-		if(intersect(location,turn)==true)
+		if(intersect(game,location,turn)==true)
 			return false;
 		
 		if(location.x1==location.x2)
@@ -86,7 +88,7 @@ public abstract class Ship {
 			{
 				for(int i=location.y1;i<=location.y2;i++)
 				{
-					Game.players.get(turn).locationSet.put(new Pair(location.x1,i),this);
+					game.getPlayers().get(turn).getLocationSet().put(new Pair(location.x1,i),this);
 					
 				}
 				return true;
@@ -97,7 +99,7 @@ public abstract class Ship {
 				
 				for(int i=location.y2;i<=location.y1;i++)
 				{
-					Game.players.get(turn).locationSet.put(new Pair(location.x1,i),this);
+					game.getPlayers().get(turn).getLocationSet().put(new Pair(location.x1,i),this);
 					
 				}
 				return true;
@@ -112,7 +114,7 @@ public abstract class Ship {
 			{
 				for(int i=location.x1;i<=location.x2;i++)
 				{
-					Game.players.get(turn).locationSet.put(new Pair(i,location.y1),this);
+					game.getPlayers().get(turn).getLocationSet().put(new Pair(i,location.y1),this);
 					
 				}
 				return true;
@@ -121,7 +123,7 @@ public abstract class Ship {
 			{
 				for(int i=location.x2;i<=location.x1;i++)
 				{
-					Game.players.get(turn).locationSet.put(new Pair(i,location.y1),this);
+					game.getPlayers().get(turn).getLocationSet().put(new Pair(i,location.y1),this);
 					
 					
 				}

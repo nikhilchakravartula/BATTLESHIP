@@ -6,13 +6,19 @@ import java.awt.event.*;
 import java.util.ArrayList;
 public class BattleField implements ActionListener{
 
-	JFrame frame;
-	ArrayList<ArrayList<JButton> > buttons;
-	Location dummyLocation;
-	ArrayList <JButton> selectedButtons;
-	public BattleField()
+	private JFrame frame;
+	private ArrayList<ArrayList<JButton> > buttons;
+	private Location dummyLocation;
+	private ArrayList <JButton> selectedButtons;
+	private Game game;
+	JFrame getFrame()
+	{
+		return frame;
+	}
+	public BattleField(Game game)
 	{
 		frame=new JFrame();
+		this.game=game;
 		frame.setLayout(new GridLayout(10,10));
 		selectedButtons=new ArrayList<JButton>();
 		dummyLocation=new Location(-1,-1,-1,-1);
@@ -39,7 +45,7 @@ public class BattleField implements ActionListener{
 		
 	}
 	
-	public void glowEffect(Location location)
+	private void glowEffect(Location location)
 	{
 		
 		int maxrow=Math.max(location.x1, location.x2),maxcol=Math.max(location.y1, location.y2),
@@ -63,7 +69,7 @@ public class BattleField implements ActionListener{
 		
 	}
 	
-	public void cleanUpGlow()
+	void cleanUpGlow()
 	{
 		for(JButton button: selectedButtons)
 		{
@@ -77,7 +83,7 @@ public class BattleField implements ActionListener{
 		
 		JButton invoked=( (JButton)e.getSource() );
 		int row=(Integer)invoked.getClientProperty("row"),col=(Integer)invoked.getClientProperty("col");
-		if(Game.state==Credentials.STATE_GAME_START)
+		if(game.getState()==Credentials.STATE_GAME_START)
 		{
 			if(dummyLocation.x1==-1)
 			{
@@ -88,13 +94,13 @@ public class BattleField implements ActionListener{
 			{
 				dummyLocation.x2=row;dummyLocation.y2=col;
 				Ship tempShip;
-				switch(Game.typeOfShip)
+				switch(game.getTypeOfShip())
 				{
 				case Credentials.TYPE_DESTROYER:
 				{
 					
-					tempShip=Game.Factory.getShip(Credentials.AVAILABLE_SHIPS[Credentials.TYPE_DESTROYER], Game.turn);
-					if(tempShip.setLocation(dummyLocation, Credentials.SIZE_DESTROYER, Game.turn)==false)
+					tempShip=game.getFactory().getShip(game,Credentials.AVAILABLE_SHIPS[Credentials.TYPE_DESTROYER], game.getTurn());
+					if(tempShip.setLocation(game,dummyLocation, Credentials.SIZE_DESTROYER, game.getTurn())==false)
 					{
 						JOptionPane.showMessageDialog(null, "cant place here", "Error", JOptionPane.OK_OPTION);
 						dummyLocation.x1=-1;dummyLocation.y1=-1;
@@ -102,10 +108,10 @@ public class BattleField implements ActionListener{
 						break;
 					}
 					glowEffect(dummyLocation);
-					synchronized (Game.Factory) {
+					synchronized (game.getFactory()) {
 						try
 						{
-							Game.Factory.notify();
+							game.getFactory().notify();
 						}
 						catch(Exception ex)
 						{
@@ -117,8 +123,8 @@ public class BattleField implements ActionListener{
 					
 				case Credentials.TYPE_AIRCRAFT:
 				{
-					tempShip=Game.Factory.getShip(Credentials.AVAILABLE_SHIPS[Credentials.TYPE_AIRCRAFT], Game.turn);
-					if(tempShip.setLocation(dummyLocation, Credentials.SIZE_AIRCRAFT, Game.turn)==false)
+					tempShip=game.getFactory().getShip(game,Credentials.AVAILABLE_SHIPS[Credentials.TYPE_AIRCRAFT], game.getTurn());
+					if(tempShip.setLocation(game,dummyLocation, Credentials.SIZE_AIRCRAFT, game.getTurn())==false)
 					{
 						JOptionPane.showMessageDialog(null, "cant place here", "Error", JOptionPane.OK_OPTION);
 						dummyLocation.x1=-1;dummyLocation.y1=-1;
@@ -126,10 +132,10 @@ public class BattleField implements ActionListener{
 						break;
 					}
 					glowEffect(dummyLocation);
-					synchronized (Game.Factory) {
+					synchronized (game.getFactory()) {
 						try
 						{
-							Game.Factory.notify();
+							game.getFactory().notify();
 						}
 						catch(Exception ex)
 						{
@@ -141,8 +147,8 @@ public class BattleField implements ActionListener{
 					
 				case Credentials.TYPE_BATTLESHIP:
 				{
-					tempShip=Game.Factory.getShip(Credentials.AVAILABLE_SHIPS[Credentials.TYPE_BATTLESHIP], Game.turn);
-					if(tempShip.setLocation(dummyLocation, Credentials.SIZE_BATTLESHIP, Game.turn)==false)
+					tempShip=game.getFactory().getShip(game,Credentials.AVAILABLE_SHIPS[Credentials.TYPE_BATTLESHIP], game.getTurn());
+					if(tempShip.setLocation(game,dummyLocation, Credentials.SIZE_BATTLESHIP, game.getTurn())==false)
 						{
 						JOptionPane.showMessageDialog(null, "cant place here", "Error", JOptionPane.OK_OPTION);
 						dummyLocation.x1=-1;dummyLocation.y1=-1;
@@ -150,10 +156,10 @@ public class BattleField implements ActionListener{
 						break;
 						}
 					glowEffect(dummyLocation);
-					synchronized (Game.Factory) {
+					synchronized (game.getFactory()) {
 						try
 						{
-							Game.Factory.notify();
+							game.getFactory().notify();
 						}
 						catch(Exception ex)
 						{
@@ -165,8 +171,8 @@ public class BattleField implements ActionListener{
 					
 				case Credentials.TYPE_CRUISER:
 				{
-					tempShip=Game.Factory.getShip(Credentials.AVAILABLE_SHIPS[Credentials.TYPE_CRUISER], Game.turn);
-					if(tempShip.setLocation(dummyLocation, Credentials.SIZE_CRUISER, Game.turn)==false)
+					tempShip=game.getFactory().getShip(game,Credentials.AVAILABLE_SHIPS[Credentials.TYPE_CRUISER], game.getTurn());
+					if(tempShip.setLocation(game,dummyLocation, Credentials.SIZE_CRUISER, game.getTurn())==false)
 					{
 						JOptionPane.showMessageDialog(null, "cant place here", "Error", JOptionPane.OK_OPTION);
 						dummyLocation.x1=-1;dummyLocation.y1=-1;
@@ -174,10 +180,10 @@ public class BattleField implements ActionListener{
 						break;
 					}
 					glowEffect(dummyLocation);
-					synchronized (Game.Factory) {
+					synchronized (game.getFactory()) {
 						try
 						{
-							Game.Factory.notify();
+							game.getFactory().notify();
 						}
 						catch(Exception ex)
 						{
@@ -189,8 +195,8 @@ public class BattleField implements ActionListener{
 					
 				case Credentials.TYPE_SUBMARINE:
 				{
-					tempShip=Game.Factory.getShip(Credentials.AVAILABLE_SHIPS[Credentials.TYPE_SUBMARINE], Game.turn);
-					if(tempShip.setLocation(dummyLocation, Credentials.SIZE_SUBMARINE, Game.turn)==false)
+					tempShip=game.getFactory().getShip(game,Credentials.AVAILABLE_SHIPS[Credentials.TYPE_SUBMARINE], game.getTurn());
+					if(tempShip.setLocation(game,dummyLocation, Credentials.SIZE_SUBMARINE, game.getTurn())==false)
 					{
 						JOptionPane.showMessageDialog(null, "cant place here", "Error", JOptionPane.OK_OPTION);
 						dummyLocation.x1=-1;dummyLocation.y1=-1;
@@ -198,10 +204,10 @@ public class BattleField implements ActionListener{
 						break;
 					}
 					glowEffect(dummyLocation);
-					synchronized (Game.Factory) {
+					synchronized (game.getFactory()) {
 						try
 						{
-							Game.Factory.notify();
+							game.getFactory().notify();
 						}
 						catch(Exception ex)
 						{
@@ -219,27 +225,65 @@ public class BattleField implements ActionListener{
 			
 			
 		}
-		else if(Game.state==Credentials.STATE_GAME_PLAYING)
+		else if(game.getState()==Credentials.STATE_GAME_PLAYING)
 		{
+		
 			
-			if(Ship.contains(new Pair(row,col),Game.turn^1))
+			if(Ship.contains(game,new Pair(row,col),game.getTurn()^1))
 			{
-				JOptionPane.showMessageDialog(null, Game.players.get(Game.turn^1).name+" is hit",null,JOptionPane.OK_OPTION);
 				buttons.get(row).get(col).setBackground(Color.RED);
-				Game.players.get(Game.turn^1).locationSet.remove(new Pair(row,col));
+				JOptionPane.showMessageDialog(null, game.getPlayers().get(game.getTurn()^1).getName()+" is hit",null,JOptionPane.OK_OPTION);
+				Ship sh=getLocationSetValue(new Pair(row,col),game.getTurn()^1);
+				System.out.println("clicked at\t"+row +"\t"+col);
+				System.out.println("ship life is"+sh.life);
+				if( 0==(sh.life-=1))
+						{
+					System.out.println("player life is"+game.getPlayers().get(game.getTurn()^1).getLife());
+							if(0==(game.getPlayers().get(game.getTurn()^1).decrementLife()))
+							{
+								game.setState(Credentials.STATE_GAME_END);
+								game.setWinner(game.getPlayers().get(game.getTurn()));
+							}
+						}
+			//	Game.players.get(Game.turn^1).locationSet.remove(new Pair(row,col));
+				
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "Miss",null,JOptionPane.OK_OPTION);
 				buttons.get(row).get(col).setBackground(Color.YELLOW);
+				JOptionPane.showMessageDialog(null, "Miss",null,JOptionPane.OK_OPTION);
 			}
 			
 			buttons.get(row).get(col).setEnabled(false);
 			
+			try
+			{
+				synchronized (game.getFactory()) {
+					game.getFactory().notify();
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
 			
 			
 		}
 		
 		
+	}
+	
+	private Ship getLocationSetValue(Pair p,int turn)
+	{
+		System.out.println("Searching in turn "+turn );
+		for(Pair itr: game.getPlayers().get(turn).getLocationSet().keySet())
+		{
+			System.out.println("row and col "+itr.row+"\t"+itr.col);
+			if(itr.row==p.row && itr.col==p.col)
+			{
+				return game.getPlayers().get(turn).getLocationSet().get(itr);
+			}
+		}
+		return null;
 	}
 
 
